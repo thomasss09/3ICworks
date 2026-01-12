@@ -13,7 +13,7 @@ public class Main {
         N = SC.nextInt();
         System.out.println("questa è la tua matrice attuale");
         int[][] matrone = Matrici.creaMatrice(N, M);
-        System.out.println(matrone);
+        Matrici.stampaMatrice(matrone);
 
         System.out.println("ECCO IL MENU': -Trasposta(1) || -ScambiaRighe(2) || -ScambiaColonne(3) || -SommaRighe(4) || -SommaColonne(5) || -Esci(6) ");
         System.out.println("scegli un opzione per continuare(1-6)");

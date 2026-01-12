@@ -31,18 +31,7 @@ public class Matrici {
     }
 
     // CREO IL MENUUUUU
-    public static void creaMenu(int opzione){
-        if(opzione < 1 || opzione > 6){
-            System.out.println("numero errato.. indexOutOfBuonds!!!");
-        }
-    }
-
-
-
-
-
-
-
+    
     //trasposta
     public static int[][] trasporta(int N, int M) {
         return creaMatrice(N, M);
@@ -69,7 +58,7 @@ public class Matrici {
             System.out.println();
         }
     }
-
+       //stampo le colonne
     public static int[][] ScambiaColonne(int[][] matrice, int colonna1, int colonna2) {
         int t = 0;
         int colonne = matrice[0].length;                    // mi da la lunghezza della colonna 
@@ -79,5 +68,33 @@ public class Matrici {
             matrice[colonna2][i] = t;                         // do alla 2 colonna il numero che mi ero tenuto della 1
         }
         return matrice;
+    }
+    // inizio a formare il menù
+    public static void creaMenu(int opzione){
+        switch(opzione){
+            case 1:
+                trasporta(N,M);
+            break;
+            case 2:  //scambiarighe
+
+            break;
+            case 3:   //scambiacolonne
+
+            break;
+            case 4:  //sommarighe
+
+            break;
+            case 5:   //sommacolonne
+
+            break;
+            case 6:  //esce dal menù
+
+            break;
+            default:
+                if(opzione < 1 || opzione > 6){
+            System.out.println("numero errato.. indexOutOfBuonds!!!"); 
+            }
+            break;
+        }
     }
 }
