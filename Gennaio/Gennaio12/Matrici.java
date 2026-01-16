@@ -1,5 +1,6 @@
 package Gennaio12;
 
+
 /*Lo scopo è avere un programma che ci permette di lavorare e modificare le matrici
 Nel main, leggi le dimensioni N e M dall'utente
 Fai un metodo che crea una matrice NxM riempita di numeri casuali da 0 a 99 (inclusi), e
