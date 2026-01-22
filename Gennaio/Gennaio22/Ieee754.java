@@ -1,5 +1,4 @@
 package Gennaio22;
-
 import java.util.Scanner;
 
 public class Ieee754 {
