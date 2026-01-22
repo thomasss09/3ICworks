@@ -1,5 +1,7 @@
 package Gennaio12;
 
+import java.util.Arrays;
+
 /*Lo scopo è avere un programma che ci permette di lavorare e modificare le matrici
 Nel main, leggi le dimensioni N e M dall'utente
 Fai un metodo che crea una matrice NxM riempita di numeri casuali da 0 a 99 (inclusi), e
@@ -33,7 +35,8 @@ public class Matrici {
     // CREO IL MENUUUUU
     
     //trasposta
-    public static int[][] trasporta(int N, int M) {
+    public static int[][] trasporta(int N , int M) {
+        System.out.println(Arrays.toString(creaMatrice(N, M)));
         return creaMatrice(N, M);
     }
     //Scambia righe
@@ -70,10 +73,11 @@ public class Matrici {
         return matrice;
     }
     // inizio a formare il menù
-    public static void creaMenu(int opzione){
+    public static void creaMenu(int opzione , int[][] matrice){
         switch(opzione){
             case 1:
-                trasporta(N,M);
+                
+                
             break;
             case 2:  //scambiarighe
 
@@ -82,7 +86,7 @@ public class Matrici {
 
             break;
             case 4:  //sommarighe
-
+ 
             break;
             case 5:   //sommacolonne
 
