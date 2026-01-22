@@ -1,6 +1,5 @@
 package Gennaio12;
 
-import java.util.Arrays;
 
 /*Lo scopo è avere un programma che ci permette di lavorare e modificare le matrici
 Nel main, leggi le dimensioni N e M dall'utente
