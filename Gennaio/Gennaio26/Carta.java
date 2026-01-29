@@ -2,9 +2,9 @@
 public class Carta {
 
     private String nome = "";
-    private int hp;
-    private int atk;
-    private int def;
+    protected  int hp;
+    protected int atk;
+    protected int def; 
 
     public Carta() {
         this.nome = sceltaNome();
@@ -36,6 +36,54 @@ public class Carta {
     @Override
     public String toString() {
         return nome + ": hp=" + hp + "atk=" + atk + "def=" + def ;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getAtk() {
+        return atk;
+    }
+
+    public void setAtk(int atk) {
+        this.atk = atk;
+    }
+
+    public int getDef() {
+        return def;
+    }
+
+    public void setDef(int def) {
+        this.def = def;
+    }
+
+    public static String[] getPrefissi() {
+        return prefissi;
+    }
+
+    public static void setPrefissi(String[] prefissi) {
+        Carta.prefissi = prefissi;
+    }
+
+    public static String[] getSuffissi() {
+        return suffissi;
+    }
+
+    public static void setSuffissi(String[] suffissi) {
+        Carta.suffissi = suffissi;
     }
     
 }
