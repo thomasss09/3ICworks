@@ -1,10 +1,11 @@
-
+//FINITO
 public class Carta {
 
     private String nome = "";
-    protected  int hp;
+    protected int hp;
     protected int atk;
-    protected int def; 
+    protected int def;
+    Target target;
 
     public Carta() {
         this.nome = sceltaNome();
@@ -35,7 +36,7 @@ public class Carta {
 
     @Override
     public String toString() {
-        return nome + ": hp=" + hp + "atk=" + atk + "def=" + def ;
+        return nome + ": hp=" + hp + "atk=" + atk + "def=" + def;
     }
 
     public String getNome() {
@@ -85,5 +86,13 @@ public class Carta {
     public static void setSuffissi(String[] suffissi) {
         Carta.suffissi = suffissi;
     }
-    
+
+    public Target getTarget() {
+        return target;
+    }
+
+    public void setTarget(Target target) {
+        this.target = target;
+    }
+
 }
