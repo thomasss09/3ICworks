@@ -1,14 +1,14 @@
 //FINITO
 public class Carta {
 
-    protected String nomrGiocatore= "";
+    protected String nome;
     protected int hp;
     protected int atk;
     protected int def;
     Target target;
 
     public Carta() {
-        this.nomrGiocatore = sceltaNome();
+        this.nome = sceltaNome();
         this.hp = (int) (Math.random() * 50);
         this.atk = (int) (Math.random() * 50);
         this.def = (int) (Math.random() * 50);
@@ -36,15 +36,15 @@ public class Carta {
 
     @Override
     public String toString() {
-        return nomrGiocatore + ": hp=" + hp + "atk=" + atk + "def=" + def;
+        return nome + ": hp=" + hp + "atk=" + atk + "def=" + def;
     }
 
     public String getNome() {
-        return nomrGiocatore;
+        return nome;
     }
 
     public void setNome(String nome) {
-        this.nomrGiocatore = nome;
+        this.nome = nome;
     }
 
     public int getHp() {

@@ -13,6 +13,7 @@ public class Partita extends Extension {
         primoTurno = true;
     }
 // Gioca 1 solo turno. Se `turno` è pari, tocca al giocatore1,
+
     public void turno() {
         if (this.turno % 2 == 0) {
             System.out.println("turno di " + giocatore1.nomrGiocatore);
@@ -20,7 +21,7 @@ public class Partita extends Extension {
             if (primoTurno) {
                 primoTurno = false;
             } else {
-                giocatore1.battlePhase(giocatore1.nomrGiocatore);
+                giocatore1.battlePhase(giocatore2.nomrGiocatore);
             }
             giocatore1.pescaCarta();
         } else {
@@ -41,20 +42,20 @@ public class Partita extends Extension {
 // Ritorna il vincitore
 
     public Giocatore getVincitore() {
-    if (giocatore1.getVita() <= 0 && giocatore2.getVita() > 0) {
-        return giocatore2;
-    } else if (giocatore2.getVita() <= 0 && giocatore1.getVita() > 0) {
-        return giocatore1;
+        if (giocatore1.getVita() <= 0 && giocatore2.getVita() > 0) {
+            return giocatore2;
+        } else if (giocatore2.getVita() <= 0 && giocatore1.getVita() > 0) {
+            return giocatore1;
+        }
+        return null;
     }
-    return null; 
-}
 
 // Simula l'intera partita (vedi dopo)
     public void gioca() {
-        System.out.println(" La partita è inziata , giocherà per primo " + giocatore1.nomrGiocatore + " buona fortuna");
+        System.out.println(" La partita è inziata , giocherà per primo " + this.giocatore1.getNomeGiocatore() + " buona fortuna");
         while (!isFinita()) {
-            turno++;
             turno();
+            turno++;
         }
         System.out.println("Il vincitore di questa partita è " + getVincitore().getNomeGiocatore() + " bravo !!!");
     }
