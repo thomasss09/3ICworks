@@ -2,21 +2,19 @@
 
 public class Giocatore {
 
-    protected String nomrGiocatore;
-    private int vita = 3;
+    protected String nomeGiocatore;
+    private int vita;
     private Carta[] mazzo;
     private Carta[] carteInMano;
     private Carta[] carteSulCampo = new Carta[5];
-    private String nomeGiocatore;
     Target target;
 
     public Giocatore(String nomeGiocatore) {
-        this.nomrGiocatore = nomeGiocatore;
+        this.nomeGiocatore = nomeGiocatore;
         this.vita = 3;
         this.mazzo = new Carta[50];
         this.carteInMano = new Carta[10];
         this.carteSulCampo = new Carta[5];
-        this.nomeGiocatore = nomeGiocatore;
         this.target = Target.randTarget();
 
         for (int i = 0; i < mazzo.length; i++) {
@@ -28,8 +26,8 @@ public class Giocatore {
     }
 
     // metodo che pesca una carta dal mazzo 
-    public void pescaCarta() {       
-        if (controllaMano() <10) {
+    public void pescaCarta() {
+        if (controllaMano() < 10) {
             for (int i = 0; i < mazzo.length; i++) {
                 if (mazzo[i] != null) {
                     for (int j = 0; j < carteInMano.length; j++) {
@@ -47,12 +45,12 @@ public class Giocatore {
     //evoca carts ==> prendere una carta dalla mano e metterla sul campo da gioco 
 
     public void evocaCarta() {
-        if (controllaMano()>0) {
+        if (controllaMano() > 0) { // controlla mano restituisce un int di quante carte abbiamo in mano
             for (int i = 0; i < carteInMano.length; i++) {
-                if (carteInMano[i] != null) {
-                    for (int j = 0; j < carteSulCampo.length; j++) {
-                        if (carteSulCampo[j] == null) {
-                            carteSulCampo[j] = carteInMano[i];
+                if (carteInMano[i] != null) { // se c'è la carta con idx i
+                    for (int j = 0; j < carteSulCampo.length; j++) { //guardo tutto  carte sul campo
+                        if (carteSulCampo[j] == null) {  // se c'è uno spazio vuoto
+                            carteSulCampo[j] = carteInMano[i]; //lo assegno
                             carteInMano[i] = null;
                             break;  // serve perchè se ho tutto l'array vuoto potrebbe evocare la carta più volte
                         }
@@ -64,7 +62,7 @@ public class Giocatore {
 // controlliamo se abbiamo carte in mano 
 
     public int controllaMano() {
-        int contaCarte=0;
+        int contaCarte = 0;
         for (int i = 0; i < carteInMano.length; i++) {
             if (carteInMano[i] != null) {
                 contaCarte++;
@@ -128,13 +126,26 @@ public class Giocatore {
         for (int i = 0; i < carteSulCampo.length; i++) {
             this.carteSulCampo = ordinaCarteSulCampo();
             cont++;
-            if (this.carteSulCampo[i] == null) {
+            if (this.carteSulCampo[i] == null  || carteSulCampo[i] == null) {
+                evocaCarta();
                 if (cont == 5) {
                     this.vita -= 1;
                 }
             }
+
+            for (int j = 0; j < carteSulCampo.length; j++) {
+                if (carteSulCampo[j] != null) {
+                    Target t = carteSulCampo[j].getTarget();
+                    if (t != null) {
+                        this.getCarteSulCampo()[j].getTarget();
+                    } else {
+                        System.out.println("sono nulla");
+                    }
+                }
+            }
             System.out.println("indice " + i + " lunghezza array carte sul campo " + this.getCarteSulCampo().length);
-            if (this.getCarteSulCampo()[i]!= null) {
+            if (this.getCarteSulCampo()[i].getTarget() != null && carteSulCampo[i] != null || this.carteSulCampo[i] == null) {
+                System.out.println("SONO NULL");
                 System.out.println("CARTE SUL CAMPO " + this.getCarteSulCampo()[i].getTarget());
                 switch (this.getCarteSulCampo()[i].getTarget()) {
                     case ATK_FORTE:
@@ -213,7 +224,7 @@ public class Giocatore {
                                 idx = j;
                             }
                         }
-
+                        
                         carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                           //infiggiamo del danno alla carta con def minimo
                         if (carteSulCampo[idx].getHp() <= 0) {                                                  // se la carta è di numero neg la togliamo 
                             carteSulCampo[idx] = null;

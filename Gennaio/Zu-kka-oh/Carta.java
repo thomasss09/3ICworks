@@ -12,6 +12,8 @@ public class Carta {
         this.hp = (int) (Math.random() * 50);
         this.atk = (int) (Math.random() * 50);
         this.def = (int) (Math.random() * 50);
+        this.target = Target.randTarget();
+        
     }
 
     private static String[] prefissi = {
@@ -48,7 +50,7 @@ public class Carta {
     }
 
     public int getHp() {
-        return hp;
+        return this.hp;
     }
 
     public void setHp(int hp) {
@@ -56,7 +58,7 @@ public class Carta {
     }
 
     public int getAtk() {
-        return atk;
+        return this.atk;
     }
 
     public void setAtk(int atk) {
@@ -64,7 +66,7 @@ public class Carta {
     }
 
     public int getDef() {
-        return def;
+        return this.def;
     }
 
     public void setDef(int def) {
@@ -86,9 +88,9 @@ public class Carta {
     public static void setSuffissi(String[] suffissi) {
         Carta.suffissi = suffissi;
     }
-
+    // GET TARGET è NULL
     public Target getTarget() {
-        return target;
+        return this.target;
     }
 
     public void setTarget(Target target) {
