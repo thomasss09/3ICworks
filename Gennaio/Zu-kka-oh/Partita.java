@@ -50,6 +50,7 @@ public class Partita extends Extension {
 
 // Simula l'intera partita (vedi dopo)
     public void gioca() {
+
         System.out.println(" La partita è inziata , giocherà per primo " + this.giocatore1.getNomeGiocatore() + " buona fortuna");
         setupIniziale();
         while (!isFinita()) {

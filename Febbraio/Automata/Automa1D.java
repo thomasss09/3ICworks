@@ -1,7 +1,8 @@
 
-class Automa1D {
+public class Automa1D {
 
     private int[] striscia;
+    private String strisciaTemp = "";//0001000
     private int regola;
 
     public Automa1D(int larghezza, int regola) {
@@ -11,9 +12,53 @@ class Automa1D {
     }
 
     public int calcolaStato(int sinistra, int centro, int destra) {
+        String[] stato = {"111", "110", "101", "100", "011", "010", "001", "000"};
         // TODO Completa qui : in base a sinistra, centro, destra e la "regola"
         // devi calcolare il nuovo stato
+        for (int i = 0; i < stato.length; i++) {
+            if(striscia.substring(i , i+2))
+        }
 
+
+
+
+
+
+
+        for (int i = 0; i < striscia.length; i++) {
+            strisciaTemp += striscia[i];
+        }
+        for (int i = 0; i < striscia.length; i++) {
+            switch (strisciaTemp.substring(i, i + 2)) {
+                case "000": {
+                    strisciaTemp = "000" + strisciaTemp.substring(i + 3);
+                }
+                case "001": {
+
+                }
+                case "010": {
+
+                }
+                case "011": {
+
+                }
+                case "100": {
+
+                }
+                case "101": {
+
+                }
+                case "110": {
+
+                }
+                case "111": {
+
+                }
+                default: {
+                    System.out.println(" non è una combinazione corretta");
+                }
+            }
+        }
         return 0;
     }
 
