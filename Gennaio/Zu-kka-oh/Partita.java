@@ -16,6 +16,7 @@ public class Partita extends Extension {
         giocatore1.evocaCarta();
         giocatore2.evocaCarta();
     }
+
     public void turno() {
         if (this.turno % 2 == 0) {
             System.out.println("turno di " + giocatore1.nomeGiocatore);
@@ -59,5 +60,5 @@ public class Partita extends Extension {
         }
         System.out.println("Il vincitore di questa partita è " + getVincitore().getNomeGiocatore() + " bravo !!!");
     }
-    
+
 }

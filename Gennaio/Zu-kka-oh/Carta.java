@@ -1,4 +1,5 @@
 //FINITO
+
 public class Carta {
 
     protected String nome;
@@ -13,7 +14,7 @@ public class Carta {
         this.atk = (int) (Math.random() * 50);
         this.def = (int) (Math.random() * 50);
         this.target = Target.randTarget();
-        
+
     }
 
     private static String[] prefissi = {
@@ -88,6 +89,7 @@ public class Carta {
     public static void setSuffissi(String[] suffissi) {
         Carta.suffissi = suffissi;
     }
+
     // GET TARGET è NULL
     public Target getTarget() {
         return this.target;
