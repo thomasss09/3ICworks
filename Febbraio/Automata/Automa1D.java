@@ -1,65 +1,75 @@
 
 public class Automa1D {
 
-    private int[] striscia;
-    private String strisciaTemp = ""; //0001000
-    private int regola;
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+    private static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+    private String stringaIni;
+    public String strisciaString = "";
+    protected int regola = 0;
 
     public Automa1D(int larghezza, int regola) {
-        this.striscia = new int[larghezza];
+        this.stringaIni = creaStriscia(larghezza);
         this.regola = regola;
-        striscia[larghezza / 2] = 1; // solo una cella accesa al centro.Ci serve per // vedere se si "propaga"
-
     }
 
-    public String calcolaStato(int sinistra, int centro, int destra) {
-        String[] stato = {"111", "110", "101", "100", "011", "010", "001", "000"};
-        // TODO Completa qui : in base a sinistra, centro, destra e la "regola"
-        // devi calcolare il nuovo stato
-        int n = 8; // numero lunghezza miaStriscia
-        String nuovaRiga = "";
-
-        for (int i = 0; i < n; i++) {
-            String tripla; //prendo 3 bit
-            if (i == 0) {
-                // bordo sinistro
-                tripla = "0" + strisciaTemp.substring(0, 2);
-
-            } else if (i == n - 1) {
-                // bordo destro
-                tripla = strisciaTemp.substring(n - 2, n) + "0";
-
+    private String creaStriscia(int larghezza) {  // striscia iniziale //00001000
+        String strisciaIni = "";
+        for (int i = 0; i < larghezza; i++) {
+            if (i == larghezza / 2) {
+                strisciaIni += "1";
             } else {
-                // bordo normale
-                tripla = strisciaTemp.substring(i - 1, i + 2);
+                strisciaIni += 0;
             }
-
-            
-            System.out.println("i = " + i + " " + tripla);
         }
-
-        return nuovaRiga; 
+        return strisciaIni;
     }
+
+    public String calcolaStato(char sinistra, char centro, char destra) {
+        /*che regola vuoi 110 => 110 in binario 01101110 poi prendo il num e lo assegno alle triplette */
+        String[] celle = {"111", "110", "101", "100", "011", "010", "001", "000"};
+        String tripletta = "" + sinistra + centro + destra;
+        String string = Integer.toBinaryString(this.regola);    // porto la regola in binario
+        while (string.length() < 8) {                           // raggiungo gli 8 bit
+            string = "0" + string;                             // aggiungo 0 davanti la stringa
+        }
+        for (int i = 0; i < celle.length; i++) {               // guardo tutte le combinazioni
+            if (tripletta.equals(celle[i])) {                  // guardo se qualcuna è uguale alla nostra tripletta
+                strisciaString = "" + string.charAt(7 - i);    // se fosse così come trovo la tripletta giusta leggo il numero binario della regola e lo aggiung a strisciaIni
+                break;                                         // come troviamo il bit giusto esco con break (1-0)
+            }
+        }
+        return strisciaString;
+    }
+    // calcolo lo stato in next stato  110 ==> 01101111 guardo la cella 111 calcolo lo stato e poi faccio anche per 110 e così via fino a 000
 
     public void nextStato() {
-        int[] nuovoStato = new int[striscia.length];
-        //TODO Completa qui:
-        // per ogni cella, prendi i vicini e calcola il nuovo stato usando "calcolaStato"
-        striscia = nuovoStato;
+        String nuovoStato = "";
+        stringaIni = "0" + stringaIni + "0";
+        for (int i = 1; i < stringaIni.length() - 1; i++) {
+            nuovoStato = nuovoStato + calcolaStato(stringaIni.charAt(i - 1), stringaIni.charAt(i), stringaIni.charAt(i + 1));  // stringaIni.charAt(i - 1) valore sx prima di i
+        }
+        stringaIni = nuovoStato;
     }
-/* 
+
     public void stampa() {
-        for (int c : striscia) {
-            System.out.print(c = 1 ? "█" : " ");
+        for (int i = 0; i < stringaIni.length(); i++) {
+            System.out.print(stringaIni.charAt(i) == '1' ? ANSI_BLACK_BACKGROUND + " " + ANSI_RESET : ANSI_GREEN_BACKGROUND + " " + ANSI_RESET);
+            //fa il delay
+            try {
+                Thread.sleep(1); // 1 millisecondo
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         System.out.println();
     }
 
     public static void main(String[] args) {
-        Automa1D ac = new Automa1D(61, 110);
-        for (int i = 0; i < 30; i++) {
+        Automa1D ac = new Automa1D(195, 90);
+        for (int i = 0; i < 100; i++) {
             ac.stampa();
             ac.nextStato();
         }
-    }*/
+    }
 }
