@@ -2,64 +2,43 @@
 public class Automa1D {
 
     private int[] striscia;
-    private String strisciaTemp = "";//0001000
+    private String strisciaTemp = ""; //0001000
     private int regola;
 
     public Automa1D(int larghezza, int regola) {
         this.striscia = new int[larghezza];
         this.regola = regola;
         striscia[larghezza / 2] = 1; // solo una cella accesa al centro.Ci serve per // vedere se si "propaga"
+
     }
 
-    public int calcolaStato(int sinistra, int centro, int destra) {
+    public String calcolaStato(int sinistra, int centro, int destra) {
         String[] stato = {"111", "110", "101", "100", "011", "010", "001", "000"};
         // TODO Completa qui : in base a sinistra, centro, destra e la "regola"
         // devi calcolare il nuovo stato
-        for (int i = 0; i < stato.length; i++) {
-            if(striscia.substring(i , i+2))
-        }
+        int n = 8; // numero lunghezza miaStriscia
+        String nuovaRiga = "";
 
+        for (int i = 0; i < n; i++) {
+            String tripla; //prendo 3 bit
+            if (i == 0) {
+                // bordo sinistro
+                tripla = "0" + strisciaTemp.substring(0, 2);
 
+            } else if (i == n - 1) {
+                // bordo destro
+                tripla = strisciaTemp.substring(n - 2, n) + "0";
 
-
-
-
-
-        for (int i = 0; i < striscia.length; i++) {
-            strisciaTemp += striscia[i];
-        }
-        for (int i = 0; i < striscia.length; i++) {
-            switch (strisciaTemp.substring(i, i + 2)) {
-                case "000": {
-                    strisciaTemp = "000" + strisciaTemp.substring(i + 3);
-                }
-                case "001": {
-
-                }
-                case "010": {
-
-                }
-                case "011": {
-
-                }
-                case "100": {
-
-                }
-                case "101": {
-
-                }
-                case "110": {
-
-                }
-                case "111": {
-
-                }
-                default: {
-                    System.out.println(" non è una combinazione corretta");
-                }
+            } else {
+                // bordo normale
+                tripla = strisciaTemp.substring(i - 1, i + 2);
             }
+
+            
+            System.out.println("i = " + i + " " + tripla);
         }
-        return 0;
+
+        return nuovaRiga; 
     }
 
     public void nextStato() {
@@ -68,7 +47,7 @@ public class Automa1D {
         // per ogni cella, prendi i vicini e calcola il nuovo stato usando "calcolaStato"
         striscia = nuovoStato;
     }
-
+/* 
     public void stampa() {
         for (int c : striscia) {
             System.out.print(c = 1 ? "█" : " ");
@@ -82,5 +61,5 @@ public class Automa1D {
             ac.stampa();
             ac.nextStato();
         }
-    }
+    }*/
 }
