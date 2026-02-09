@@ -52,21 +52,17 @@ public class Automa1D {
         stringaIni = nuovoStato;
     }
 
-    public void stampa() {
+    public void stampa() throws InterruptedException {
         for (int i = 0; i < stringaIni.length(); i++) {
             System.out.print(stringaIni.charAt(i) == '1' ? ANSI_BLACK_BACKGROUND + " " + ANSI_RESET : ANSI_GREEN_BACKGROUND + " " + ANSI_RESET);
             //fa il delay
-            try {
-                Thread.sleep(1); // 1 millisecondo
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
         System.out.println();
+        Thread.sleep(1000);
     }
 
-    public static void main(String[] args) {
-        Automa1D ac = new Automa1D(195, 90);
+    public static void main(String[] args) throws InterruptedException {
+        Automa1D ac = new Automa1D(170, 110);
         for (int i = 0; i < 100; i++) {
             ac.stampa();
             ac.nextStato();
