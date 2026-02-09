@@ -8,11 +8,15 @@ public class Giocatore {
     private Carta[] carteInMano;
     private Carta[] carteSulCampo = new Carta[5];
     Target target;
+    private int contCarteMano = 0;
+    private final int NUMERO_MAZZO = 50;
+
+    private int contCarteMazzo = NUMERO_MAZZO;
 
     public Giocatore(String nomeGiocatore) {
         this.nomeGiocatore = nomeGiocatore;
         this.vita = 3;
-        this.mazzo = new Carta[50];
+        this.mazzo = new Carta[NUMERO_MAZZO];
         this.carteInMano = new Carta[10];
         this.carteSulCampo = new Carta[5];
         this.target = Target.randTarget();
@@ -22,41 +26,42 @@ public class Giocatore {
         }
         for (int j = 0; j < 5; j++) {
             pescaCarta();
+
         }
+    }
+
+    public int getNumeroCarteInMano() {
+        return contCarteMano;
+    }
+
+    public int getNumeroCarteInMazzo() {
+        return contCarteMazzo;
+    }
+
+    public int indiceCartaDaPescare() {
+        // 50 carte nel mazzo
+        // contCarteMazzo 
+        return NUMERO_MAZZO - contCarteMazzo;
     }
 
     // metodo che pesca una carta dal mazzo 
     public void pescaCarta() {
-        if (controllaMano() < 10) {
-            for (int i = 0; i < mazzo.length; i++) {
-                if (mazzo[i] != null) {
-                    for (int j = 0; j < carteInMano.length; j++) {
-                        if (carteInMano[j] == null) {
-                            carteInMano[j] = mazzo[i];
-                            mazzo[i] = null;
-                            System.out.println("la carta che hai pescato è " + carteInMano[j]);
-                            return;
-                        }
-                    }
-                }
-            }
+        if (contCarteMano < 10) {
+            carteInMano[contCarteMano] = mazzo[indiceCartaDaPescare()];
+            System.out.println("la carta che hai pescato è " + carteInMano[contCarteMano]);
+            contCarteMano++;
+            contCarteMazzo--;
         }
     }
     //evoca carts ==> prendere una carta dalla mano e metterla sul campo da gioco 
 
     public void evocaCarta() {
         if (controllaMano() > 0) { // controlla mano restituisce un int di quante carte abbiamo in mano
-            for (int i = 0; i < carteInMano.length; i++) {
-                if (carteInMano[i] != null) { // se c'è la carta con idx i
-                    for (int j = 0; j < carteSulCampo.length; j++) { //guardo tutto  carte sul campo
-                        if (carteSulCampo[j] == null) {  // se c'è uno spazio vuoto
-                            carteSulCampo[j] = carteInMano[i]; //lo assegno
-                            carteInMano[i] = null;
-                            break;  // serve perchè se ho tutto l'array vuoto potrebbe evocare la carta più volte
-                        }
-                    }
-                }
-            }
+                 // se c'è la carta con idx i
+                    carteSulCampo[contCarteMazzo] = carteInMano[contCarteMano]; //lo assegno
+                    contCarteMano++;
+                
+            
         }
     }
 // controlliamo se abbiamo carte in mano 
@@ -72,7 +77,7 @@ public class Giocatore {
     }
 
     //ordiniamo le carte sul campo per punti 
-    public Carta[] ordinaCarteSulCampo() { // Bubble sort
+    public void ordinaCarteSulCampo() { // Bubble sort
         Carta sostituto;
         boolean sos;
         int n = this.carteSulCampo.length;
@@ -93,8 +98,7 @@ public class Giocatore {
                 break;
             }
         }
-        
-        return this.carteSulCampo;
+
     }
 
     public String getNomeGiocatore() {
@@ -117,192 +121,190 @@ public class Giocatore {
         return vita;
     }
 
-    public void attaccoDiretto(){
+    public void attaccoDiretto() {
         for (int i = 0; i < this.carteSulCampo.length; i++) {
-            if(this.carteSulCampo[i] == null){
-                this.vita-=1;
+            if (this.carteSulCampo[i] == null) {
+                this.vita -= 1;
             }
         }
     }
 
     public void battlePhase(String nome) {
-    int cont = 0;
-    int danno = 0;
+        int cont = 0;
+        int danno = 0;
+        ordinaCarteSulCampo();
+        for (int i = 0; i < carteSulCampo.length; i++) {
 
-    for (int i = 0; i < carteSulCampo.length; i++) {
-        this.carteSulCampo = ordinaCarteSulCampo();
-        cont++;
+            cont++;
 
-        if (this.carteSulCampo[i] == null) {
-            evocaCarta();
-            if (cont == 5) {
-                this.vita -= 1;
+            if (this.carteSulCampo[i] == null) {
+                evocaCarta(); // NO!!!!
+                if (cont == 5) {
+                    this.vita -= 1;
+                }
+            }
+
+            //System.out.println("indice " + i + " lunghezza array carte sul campo " + this.getCarteSulCampo().length);
+            if (carteSulCampo[i] != null && this.getCarteSulCampo()[i].getTarget() != null) {
+                switch (this.getCarteSulCampo()[i].getTarget()) {
+
+                    case ATK_FORTE:
+
+                        int max = Integer.MIN_VALUE; // valore minimo così so che trova una carta più forte per forza
+                        int idx = -1;
+
+                        danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno da infliggere
+                        if (danno == 0) {                                                                       // se il danno è 0 mettiamo un danno minimo
+                            danno = Extension.dannoMin();
+                        }
+                        attaccoDiretto();
+                        for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta attacco con valore maggiore
+                            if (carteSulCampo[j] != null && max < carteSulCampo[j].getAtk()) {
+                                max = carteSulCampo[j].getAtk();                                                //cartasulcampo[j] diventa il nuovo max
+                                idx = j;
+                            }
+                        }
+
+                        if (idx != -1 && carteSulCampo[idx] != null) {
+                            carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       // attacchiamo
+                            if (carteSulCampo[idx].getHp() <= 0) {
+                                carteSulCampo[idx] = null;
+                            }
+                        }
+
+                        break;
+
+                    case ATK_DEBOLE:
+
+                        int min = Integer.MAX_VALUE;
+                        idx = -1;
+
+                        danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno
+                        if (danno == 0) {
+                            danno = Extension.dannoMin();                                                       //attribuiamo il danno minimo
+                        }
+                        attaccoDiretto();
+                        for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta difesa con valore minore
+                            if (carteSulCampo[j] != null && min > carteSulCampo[j].getAtk()) {
+                                min = carteSulCampo[j].getAtk();
+                                idx = j;
+                            }
+                        }
+
+                        if (idx != -1 && carteSulCampo[idx] != null) {
+                            carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       //infiggiamo del danno alla carta con def minimo
+                            if (carteSulCampo[idx].getHp() <= 0) {                                              // se la carta è di numero neg la togliamo 
+                                carteSulCampo[idx] = null;
+                            }
+                        }
+
+                        break;
+
+                    case DEF_FORTE:
+
+                        max = Integer.MIN_VALUE;
+                        idx = -1;
+
+                        danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno da infliggere
+                        if (danno == 0) {                                                                       // se il danno è 0 mettiamo un danno minimo
+                            danno = Extension.dannoMin();
+                        }
+                        attaccoDiretto();
+                        for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta attacco con valore maggiore
+                            if (carteSulCampo[j] != null && max < carteSulCampo[j].getDef()) {
+                                max = carteSulCampo[j].getDef();                                                //cartasulcampo[j] diventa il nuovo max
+                                idx = j;
+                            }
+                        }
+
+                        if (idx != -1 && carteSulCampo[idx] != null) {
+                            carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       // attacchiamo
+                            if (carteSulCampo[idx].getHp() <= 0) {
+                                carteSulCampo[idx] = null;
+                            }
+                        }
+
+                        break;
+
+                    case DEF_DEBOLE:
+
+                        min = Integer.MAX_VALUE;
+                        idx = -1;
+
+                        danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno
+                        if (danno == 0) {
+                            danno = Extension.dannoMin();                                                       //attribuiamo il danno minimo
+                        }
+                        attaccoDiretto();
+                        for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta difesa con valore minore
+                            if (carteSulCampo[j] != null && min > carteSulCampo[j].getAtk()) {
+                                min = carteSulCampo[j].getAtk();
+                                idx = j;
+                            }
+                        }
+
+                        if (idx != -1 && carteSulCampo[idx] != null) {
+                            carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       //infiggiamo del danno alla carta con def minimo
+                            if (carteSulCampo[idx].getHp() <= 0) {                                              // se la carta è di numero neg la togliamo 
+                                carteSulCampo[idx] = null;
+                            }
+                        }
+
+                        break;
+
+                    case HP_ALTO:
+
+                        max = Integer.MIN_VALUE;
+                        idx = -1;
+
+                        danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno da infliggere
+                        if (danno == 0) {                                                                       // se il danno è 0 mettiamo un danno minimo
+                            danno = Extension.dannoMin();
+                        }
+                        attaccoDiretto();
+                        for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta attacco con valore maggiore
+                            if (carteSulCampo[j] != null && max < carteSulCampo[j].getAtk()) {
+                                max = carteSulCampo[j].getAtk();                                                //cartasulcampo[j] diventa il nuovo max
+                                idx = j;
+                            }
+                        }
+
+                        if (idx != -1 && carteSulCampo[idx] != null) {
+                            carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       // attacchiamo
+                            if (carteSulCampo[idx].getHp() <= 0) {
+                                carteSulCampo[idx] = null;
+                            }
+                        }
+
+                        break;
+
+                    case HP_BASSO:
+
+                        min = Integer.MAX_VALUE;
+                        idx = -1;
+
+                        danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno
+                        if (danno == 0) {
+                            danno = Extension.dannoMin();                                                       //attribuiamo il danno minimo
+                        }
+                        attaccoDiretto();
+                        for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta difesa con valore minore
+                            if (carteSulCampo[j] != null && min > carteSulCampo[j].getAtk()) {
+                                min = carteSulCampo[j].getAtk();
+                                idx = j;
+                            }
+                        }
+
+                        if (idx != -1 && carteSulCampo[idx] != null) {
+                            carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       //infiggiamo del danno alla carta con def minimo
+                            if (carteSulCampo[idx].getHp() <= 0) {                                              // se la carta è di numero neg la togliamo 
+                                carteSulCampo[idx] = null;
+                            }
+                        }
+
+                        break;
+                }
             }
         }
-
-        //System.out.println("indice " + i + " lunghezza array carte sul campo " + this.getCarteSulCampo().length);
-
-        if (carteSulCampo[i] != null && this.getCarteSulCampo()[i].getTarget() != null) {
-
-            switch (this.getCarteSulCampo()[i].getTarget()) {
-
-                case ATK_FORTE:
-
-                    int max = Integer.MIN_VALUE; // valore minimo così so che trova una carta più forte per forza
-                    int idx = -1;
-
-                    danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno da infliggere
-                    if (danno == 0) {                                                                       // se il danno è 0 mettiamo un danno minimo
-                        danno = Extension.dannoMin();
-                    }
-                    attaccoDiretto();
-                    for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta attacco con valore maggiore
-                        if (carteSulCampo[j] != null && max < carteSulCampo[j].getAtk()) {
-                            max = carteSulCampo[j].getAtk();                                                //cartasulcampo[j] diventa il nuovo max
-                            idx = j;
-                        }
-                    }
-
-                    if (idx != -1 && carteSulCampo[idx] != null) {
-                        carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       // attacchiamo
-                        if (carteSulCampo[idx].getHp() <= 0) {
-                            carteSulCampo[idx] = null;
-                        }
-                    }
-
-                    break;
-
-                case ATK_DEBOLE:
-
-                    int min = Integer.MAX_VALUE;
-                    idx = -1;
-
-                    danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno
-                    if (danno == 0) {
-                        danno = Extension.dannoMin();                                                       //attribuiamo il danno minimo
-                    }
-                    attaccoDiretto();
-                    for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta difesa con valore minore
-                        if (carteSulCampo[j] != null && min > carteSulCampo[j].getAtk()) {
-                            min = carteSulCampo[j].getAtk();
-                            idx = j;
-                        }
-                    }
-
-                    if (idx != -1 && carteSulCampo[idx] != null) {
-                        carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       //infiggiamo del danno alla carta con def minimo
-                        if (carteSulCampo[idx].getHp() <= 0) {                                              // se la carta è di numero neg la togliamo 
-                            carteSulCampo[idx] = null;
-                        }
-                    }
-
-                    break;
-
-                case DEF_FORTE:
-
-                    max = Integer.MIN_VALUE;
-                    idx = -1;
-
-                    danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno da infliggere
-                    if (danno == 0) {                                                                       // se il danno è 0 mettiamo un danno minimo
-                        danno = Extension.dannoMin();
-                    }
-                    attaccoDiretto();
-                    for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta attacco con valore maggiore
-                        if (carteSulCampo[j] != null && max < carteSulCampo[j].getAtk()) {
-                            max = carteSulCampo[j].getAtk();                                                //cartasulcampo[j] diventa il nuovo max
-                            idx = j;
-                        }
-                    }
-
-                    if (idx != -1 && carteSulCampo[idx] != null) {
-                        carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       // attacchiamo
-                        if (carteSulCampo[idx].getHp() <= 0) {
-                            carteSulCampo[idx] = null;
-                        }
-                    }
-
-                    break;
-
-                case DEF_DEBOLE:
-
-                    min = Integer.MAX_VALUE;
-                    idx = -1;
-
-                    danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno
-                    if (danno == 0) {
-                        danno = Extension.dannoMin();                                                       //attribuiamo il danno minimo
-                    }
-                    attaccoDiretto();
-                    for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta difesa con valore minore
-                        if (carteSulCampo[j] != null && min > carteSulCampo[j].getAtk()) {
-                            min = carteSulCampo[j].getAtk();
-                            idx = j;
-                        }
-                    }
-
-                    if (idx != -1 && carteSulCampo[idx] != null) {
-                        carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       //infiggiamo del danno alla carta con def minimo
-                        if (carteSulCampo[idx].getHp() <= 0) {                                              // se la carta è di numero neg la togliamo 
-                            carteSulCampo[idx] = null;
-                        }
-                    }
-
-                    break;
-
-                case HP_ALTO:
-
-                    max = Integer.MIN_VALUE;
-                    idx = -1;
-
-                    danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno da infliggere
-                    if (danno == 0) {                                                                       // se il danno è 0 mettiamo un danno minimo
-                        danno = Extension.dannoMin();
-                    }
-                    attaccoDiretto();
-                    for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta attacco con valore maggiore
-                        if (carteSulCampo[j] != null && max < carteSulCampo[j].getAtk()) {
-                            max = carteSulCampo[j].getAtk();                                                //cartasulcampo[j] diventa il nuovo max
-                            idx = j;
-                        }
-                    }
-
-                    if (idx != -1 && carteSulCampo[idx] != null) {
-                        carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       // attacchiamo
-                        if (carteSulCampo[idx].getHp() <= 0) {
-                            carteSulCampo[idx] = null;
-                        }
-                    }
-
-                    break;
-
-                case HP_BASSO:
-
-                    min = Integer.MAX_VALUE;
-                    idx = -1;
-
-                    danno = carteSulCampo[i].getDef() - carteSulCampo[i].getAtk();                          //calcoliamo il danno
-                    if (danno == 0) {
-                        danno = Extension.dannoMin();                                                       //attribuiamo il danno minimo
-                    }
-                    attaccoDiretto();
-                    for (int j = 0; j < carteSulCampo.length; j++) {                                        //cerchiamo la carta difesa con valore minore
-                        if (carteSulCampo[j] != null && min > carteSulCampo[j].getAtk()) {
-                            min = carteSulCampo[j].getAtk();
-                            idx = j;
-                        }
-                    }
-
-                    if (idx != -1 && carteSulCampo[idx] != null) {
-                        carteSulCampo[idx].setHp(carteSulCampo[idx].getHp() - danno);                       //infiggiamo del danno alla carta con def minimo
-                        if (carteSulCampo[idx].getHp() <= 0) {                                              // se la carta è di numero neg la togliamo 
-                            carteSulCampo[idx] = null;
-                        }
-                    }
-
-                    break;
-            }
-        }
-    }
     }
 }

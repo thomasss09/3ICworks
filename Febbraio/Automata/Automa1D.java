@@ -35,7 +35,7 @@ public class Automa1D {
         }
         for (int i = 0; i < celle.length; i++) {               // guardo tutte le combinazioni
             if (tripletta.equals(celle[i])) {                  // guardo se qualcuna è uguale alla nostra tripletta
-                strisciaString = "" + string.charAt(7 - i);    // se fosse così come trovo la tripletta giusta leggo il numero binario della regola e lo aggiung a strisciaIni
+                strisciaString = "" + string.charAt(i);    // se fosse così come trovo la tripletta giusta leggo il numero binario della regola e lo aggiung a strisciaIni
                 break;                                         // come troviamo il bit giusto esco con break (1-0)
             }
         }
@@ -58,12 +58,12 @@ public class Automa1D {
             //fa il delay
         }
         System.out.println();
-        Thread.sleep(1000);
+        Thread.sleep(500);
     }
 
     public static void main(String[] args) throws InterruptedException {
-        Automa1D ac = new Automa1D(170, 110);
-        for (int i = 0; i < 100; i++) {
+        Automa1D ac = new Automa1D(170, 210);
+        for (int i = 0; i < 1000; i++) {
             ac.stampa();
             ac.nextStato();
         }
