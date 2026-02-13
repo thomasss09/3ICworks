@@ -1,4 +1,4 @@
-package Gennaio22;
+package Ieee754;
 import java.util.Scanner;
 
 public class Ieee754 {

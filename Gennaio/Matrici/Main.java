@@ -1,4 +1,4 @@
-package Gennaio12;
+package Matrici;
 
 import java.util.Scanner;
 
