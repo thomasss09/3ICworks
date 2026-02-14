@@ -31,12 +31,19 @@ public class AsciiCanvas {
             forme[i+1] = null;
         }
     }
-public Stringa[][] crea matrice(String[][] matr){
-int.valueOf(matr);
-	for(int i ; i < ){}
+public Stringa[][] creaMatrice(String[][] matr){
+int int.valueOf(matr);
+	for(int i ; i < altezza ; i++){
+	for(int j; j < lunghezza ; j++){
+		 matr[i][j] = "#";
+	}
+}
+return matr;
 }
 
-    public void disegna() { // fare un metodo crea matice che usu il confrontyo il valore x e y della matrie con queòllo della forma da disegnare
+    public void disegna(int x , int y ) { // fare un metodo crea matice che usu il confrontyo il valore x e y della matrie con queòllo della forma da disegnare
         // TODO implementa
+			
+	
     }
 }
