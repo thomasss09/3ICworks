@@ -25,7 +25,7 @@ public class AlberoFrattale extends TurtleScreen {
         // Posiziona la tartaruga in basso al centro
         t.penUp();                       
         t.goTo(0, -250);                 
-        t.penDown();                  
+        t.penDown();   
         t.setHeading(90);                
 
         // Inizia a disegnare l'albero

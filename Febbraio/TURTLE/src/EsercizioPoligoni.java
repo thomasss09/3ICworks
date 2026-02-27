@@ -1,19 +1,22 @@
 
 import java.awt.Color;
 import java.util.Scanner;
-
 public class EsercizioPoligoni extends TurtleScreen {
+
     private Turtle t;
-    public EsercizioPoligoni() {
-        super(1200, 1080);
+      int nLati;
+    
+    int quantiPoligoni;
+    public EsercizioPoligoni(int quantiLati, int quantiPoligoni) {
+        super(1920, 1080);
+        this.nLati = quantiLati;
+        this.quantiPoligoni = quantiPoligoni;
     }
 
-    
     public void creaPoligoni(int n, int k) {
         double gradi = 360;
-
         int x = 0;
-        int y = -300;
+        int y = -350;
         gradi = (double) (gradi / n);
         int lunghezza = 250;
         for (int j = 0; j < k; j++) {
@@ -24,41 +27,45 @@ public class EsercizioPoligoni extends TurtleScreen {
                 t.forward(lunghezza);
                 t.penUp();
             }
-            lunghezza/=2;
-            x = x - (lunghezza/2);
-            y = y+lunghezza;
-            t.goTo(x,y+10);
+            lunghezza /= 2;
+            x = x - (lunghezza / 2);
+            y = y + lunghezza;
+            t.goTo(x, y + 10);
         }
     }
+
     @Override
-    public void setup() {                        // Metodo chiamato una volta all'avvio
-        noLoop();                                // Disegna 1 volta e poi si ferma
-        title("poligoni");                // Imposta il titolo della finestra
-        bgcolor(new Color(50, 50, 100));       // Colore di sfondo
-        Scanner sc = new Scanner(System.in);
-        System.out.println("dimmi il n di lati del poliggg da 3 a  12");
-        int n = sc.nextInt(); // numero di lati del poligono da  3 a 12
-        System.out.println("dimmi il num di polig da disegnare");
-        int k = sc.nextInt();   // poligoni da disegnare
-        t = createTurtle(); // Crea una nuova tartaruga
-        t.speed(1); // Velocità 1 = disegna veloce
-        t.hideTurtle(); // Nasconde la tartaruga
-        t.setPenSize(6); // Spessore iniziale della penna
-
-        // Posiziona la tartaruga in basso al centro
-        t.penUp();                       
-        t.goTo(0, -300
-            
-        );                 
-        t.penDown();                  
-        t.setHeading(0);                
-        // Inizia a disegnare il peris
-        creaPoligoni(n, k);
+    public void setup() {
+        noLoop();
+        t = createTurtle();
+        double angolo = 360 / nLati;
+        int avanti = 360 / nLati;
+        int distanza = avanti;
+        double circumraggio = 0.5 * avanti * (1 / Math.sin(Math.PI / nLati));
+        double apotema = circumraggio * Math.cos(Math.PI / nLati);
+        t.penUp();
+        t.goTo(-Math.sqrt(Math.pow(circumraggio, 2) - Math.pow(apotema, 2)), -apotema);
+        t.penDown();
+        for (int i = 0; i < quantiPoligoni; i++) {
+            for (int j = 0; j < nLati; j++) {
+                t.forward(avanti);
+                t.left(angolo);
+            }
+            avanti += distanza;
+            t.penUp();
+            t.goTo(t.position()[0] - Math.sqrt(Math.pow(circumraggio, 2) - Math.pow(apotema, 2)), t.position()[1] - apotema);
+            t.penDown();
+        }
     }
-
     public static void main(String[] args) {
-      
-        TurtleScreen app = new EsercizioPoligoni();  // Crea l'applicazione
-        app.run();                                 // Avvia l'esecuzione
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Dimmi il numero di lati: ");
+        int n = sc.nextInt();
+        System.out.print("Dimmi quanti poligoni disegnare: ");
+        int k = sc.nextInt();
+
+        EsercizioPoligoni tortellino = new EsercizioPoligoni(n, k);
+        tortellino.run();
     }
 }
