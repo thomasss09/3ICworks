@@ -58,7 +58,6 @@ public class Automa1D {
             //fa il delay
         }
         System.out.println();
-        Thread.sleep(500);
     }
 
     public static void main(String[] args) throws InterruptedException {

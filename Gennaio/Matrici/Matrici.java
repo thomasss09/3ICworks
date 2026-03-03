@@ -1,4 +1,4 @@
-package Gennaio12;
+package Matrici;
 
 
 /*Lo scopo è avere un programma che ci permette di lavorare e modificare le matrici
