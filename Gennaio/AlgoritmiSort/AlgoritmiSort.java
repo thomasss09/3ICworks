@@ -1,4 +1,4 @@
-import java.util.Arrays;
+ import java.util.Arrays;
 
 public class AlgoritmiSort {
 
@@ -10,19 +10,19 @@ public class AlgoritmiSort {
         return arr;
     }
 
-    public static void insertionSort(int[] arr, int n) {
-        int j = 0;
-        int elemento;
-        for (int i = 1; i < n; i++) {
-            elemento = arr[i];
-            j = i - 1;
-            while (j >= 0 && elemento < arr[j]) {
-                arr[j + 1] = arr[i];
-                j--;
+        public static void insertionSort(int[] arr, int n) {
+            int nPrecedente = 0;
+            int nCorrente;
+            for (int i = 1; i < n; i++) {
+                nCorrente = arr[i];
+                nPrecedente = i - 1;
+                while (nPrecedente >= 0 && nCorrente < arr[nPrecedente]) {
+                    arr[nPrecedente + 1] = arr[i];
+                    nPrecedente--;
+                }
+                arr[nPrecedente + 1] = nCorrente;
             }
-            arr[j + 1] = elemento;
         }
-    }
 
     /*
 -faccio la ricerca lineare per trovare l'elemento più piccolo

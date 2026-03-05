@@ -5,7 +5,6 @@ public class RicercaArray {
         int max = arr.length - 1;
         int min = 0;
 
-        int dif = 0;
         while (min <= max) {
             int lancio = (min + max) / 2;
             if (arr[lancio] == target) {
