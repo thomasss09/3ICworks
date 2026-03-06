@@ -1,4 +1,5 @@
- import java.util.Arrays;
+
+import java.util.Arrays;
 
 public class AlgoritmiSort {
 
@@ -10,19 +11,19 @@ public class AlgoritmiSort {
         return arr;
     }
 
-        public static void insertionSort(int[] arr, int n) {
-            int nPrecedente = 0;
-            int nCorrente;
-            for (int i = 1; i < n; i++) {
-                nCorrente = arr[i];
-                nPrecedente = i - 1;
-                while (nPrecedente >= 0 && nCorrente < arr[nPrecedente]) {
-                    arr[nPrecedente + 1] = arr[i];
-                    nPrecedente--;
-                }
-                arr[nPrecedente + 1] = nCorrente;
+    public static void insertionSort(int[] arr, int n) {
+        int nPrecedente = 0;
+        int nCorrente;
+        for (int i = 1; i < n; i++) {
+            nCorrente = arr[i];
+            nPrecedente = i - 1;
+            while (nPrecedente >= 0 && nCorrente < arr[nPrecedente]) {
+                arr[nPrecedente + 1] = arr[i];
+                nPrecedente--;
             }
+            arr[nPrecedente + 1] = nCorrente;
         }
+    }
 
     /*
 -faccio la ricerca lineare per trovare l'elemento più piccolo
@@ -43,6 +44,7 @@ public class AlgoritmiSort {
             aruba[i] = min;
         }
     }
+
     public static void bubbleSorrrt(int[] arr, int n) {  // tutto
         int sostituto; //variabile in più che prende posto momentaneo di arr[j+1] o arr[j]
         boolean sos = false;
@@ -62,7 +64,46 @@ public class AlgoritmiSort {
         }
         System.out.println(Arrays.toString(arr));
     }
-    public static void main(String[] args) {
 
+    public static int[] MergeSort(int[] arr1, int[] arr2) {
+        int[] risultato = new int[arr1.length + arr2.length];
+        int idx1 = 0;
+        int idx2 = 0;
+        int idxRis = 0;
+            while (idx1 < arr1.length && idx2 < arr2.length) {
+                if (arr1[idx1] > arr2[idx2]) {
+                    risultato[idxRis] = arr2[idx2];
+                    idx2++;
+                } else {
+                    risultato[idxRis] = arr1[idx1];
+                    idx1++;
+                }
+                idxRis++;
+            }
+            if (idx1 < arr1.length) {
+                while (idx1 < arr1.length) {
+                    risultato[idxRis] = arr1[idx1];
+                    idxRis++;
+                    idx1++;
+                }
+            }
+            if (idx2 < arr2.length) {
+                while (idx2 < arr2.length) {
+                    risultato[idxRis] = arr2[idx2];
+                    idxRis++;
+                    idx2++;
+                }
+            }
+            return risultato;
+            
+        }
+
+    
+
+    public static void main(String[] args) {
+        int[] arr = {5, 3, 8, 4};
+        int[] arr1 = {1, 7, 9, 6};
+        int[] risultato = MergeSort(arr, arr1);
+        System.out.println(Arrays.toString(risultato));
     }
 }
