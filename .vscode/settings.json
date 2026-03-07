@@ -1,8 +1,13 @@
 {
     "java.project.sourcePaths": [
+<<<<<<< HEAD
         "Gennaio/AlgoritmiSort",
         "Febbraio/TURTLE/src",
         "Febbraio/Automata",
         "Febbraio"
+=======
+        "Febbraio/Automata",
+        "Febbraio/TURTLE/src"
+>>>>>>> 864ef22e49cd04778eb564d5fceee979a2359093
     ]
 }

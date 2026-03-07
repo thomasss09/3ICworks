@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 
 import java.util.Arrays;
+=======
+ import java.util.Arrays;
+>>>>>>> 864ef22e49cd04778eb564d5fceee979a2359093
 
 public class AlgoritmiSort {
 
@@ -11,6 +15,7 @@ public class AlgoritmiSort {
         return arr;
     }
 
+<<<<<<< HEAD
     public static void insertionSort(int[] arr, int n) {
         int nPrecedente = 0;
         int nCorrente;
@@ -22,8 +27,21 @@ public class AlgoritmiSort {
                 nPrecedente--;
             }
             arr[nPrecedente + 1] = nCorrente;
+=======
+        public static void insertionSort(int[] arr, int n) {
+            int nPrecedente = 0;
+            int nCorrente;
+            for (int i = 1; i < n; i++) {
+                nCorrente = arr[i];
+                nPrecedente = i - 1;
+                while (nPrecedente >= 0 && nCorrente < arr[nPrecedente]) {
+                    arr[nPrecedente + 1] = arr[i];
+                    nPrecedente--;
+                }
+                arr[nPrecedente + 1] = nCorrente;
+            }
+>>>>>>> 864ef22e49cd04778eb564d5fceee979a2359093
         }
-    }
 
     /*
 -faccio la ricerca lineare per trovare l'elemento più piccolo
