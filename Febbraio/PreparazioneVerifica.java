@@ -1,6 +1,8 @@
+
 import java.util.Arrays;
 
 public class PreparazioneVerifica {
+
     public static int binarySearch(int[] arr, int target) { // funziona
         int min;
         int lancio = 0;
@@ -23,7 +25,7 @@ public class PreparazioneVerifica {
         return lancio;
     }
 
-    public static void bubbleSort(int[] arr) { // funziona ma era meglio fare con n+1
+    public static void bubbleSort(int[] arr) { // funziona ma era meglio fare con n+1    n<n-1
         int nCurrent;
         int nPrec;
         for (int i = 0; i < arr.length; i++) {
@@ -77,37 +79,40 @@ public class PreparazioneVerifica {
         int[] arr2 = mergeSort(Arrays.copyOfRange(arr, arr.length / 2, arr.length)); // 2 parte dell'array divide per 2 così parte giusto e va fino ad array.length perchè la fine è esclusa
         return merge(arr1, arr2);
     }
+//int[] arr1 = mergeSort(Arrays.copyOfRange(arr , 0 , arr.length /2 )); prima parte 50% motivo /2
+// int[] arr2 = mergeSort(Arrays.copyOfRange(arr , arr.legnth /2 , arr.length)); 50% in poi
+// return merge(arr1, arr2);
 
     private static int[] merge(int[] arr1, int[] arr2) {
         int[] risultato = new int[arr1.length + arr2.length];
         int idx1 = 0;
         int idx2 = 0;
-        int ris = 0;
+        int idxris = 0;
         while (idx1 < arr1.length && idx2 < arr2.length) {
             if (arr1[idx1] > arr2[idx2]) {
-                risultato[ris++] = arr2[idx2++];
+                risultato[idxris++] = arr2[idx2++];
             } else {
-                risultato[ris++] = arr1[idx1++];
+                risultato[idxris++] = arr1[idx1++];
             }
         }
         while (idx1 < arr1.length) {
-            risultato[ris++] = arr1[idx1++];
+            risultato[idxris++] = arr1[idx1++];
         }
         while (idx2 < arr2.length) {
-            risultato[ris++] = arr2[idx2++];
+            risultato[idxris++] = arr2[idx2++];
         }
         return risultato;
     }
 
     public static void main(String[] args) {
-        //int[] array = { 9, 6, 3, 4, 5, 2, 7, 10, 1, 8 };
+        int[] arr = {9, 6, 3, 4, 5, 2, 7, 10, 1, 8};
         // System.out.println(binarySearch(array, 5));
         // bubbleSort(array);
         // array = mergeSort(array);
-        // insertionSort(array);
+        //insertionSort(arr);
         // selectionSort(array);
-        int[] arr = {6,23,76,1,7,3,9,15,900,35};
-        arr = mergeSort(arr);
+        //int[] arr = {6,23,76,1,7,3,9,15,900,35};
+        //arr = mergeSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 //tempo 1 ora ma merge sort copiato
