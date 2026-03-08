@@ -10,13 +10,13 @@ public class PreparazioneVerifica {
         while (lancio != target) {
             min = arr[0];
             lancio = (min + max) / 2;
-            if (lancio == target) {
+            if (arr[lancio] == target) {
                 return lancio;
             } else {
-                if (lancio > target) {
+                if (arr[lancio] > target) {
                     max = lancio - 1;
                 } else {
-                    if (lancio < target) {
+                    if (arr[lancio] < target) {
                         min = lancio + 1;
                     }
                 }
@@ -59,7 +59,7 @@ public class PreparazioneVerifica {
         int min;
         for (int i = 0; i < arr.length; i++) {
             min = i;
-            for (int j = i + 1; j < arr.length; j++) {
+            for (int j = i; j < arr.length; j++) {
                 if (arr[j] < arr[min]) {
                     min = j;
                 }
