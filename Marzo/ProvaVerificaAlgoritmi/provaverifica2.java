@@ -1,3 +1,4 @@
+package ProvaVerificaAlgoritmi;
 
 import java.util.Arrays;
 // da fare ricerca binaria, bubble sort , insertion sort , selection sort , merge sort 
