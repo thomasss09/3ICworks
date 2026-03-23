@@ -1,6 +1,6 @@
 
 import java.util.Arrays;
-
+    
 public class PreparazioneVerifica {
 
     public static int binarySearch(int[] arr, int target) { // funziona
@@ -46,20 +46,20 @@ public class PreparazioneVerifica {
         int nCurrent;
         for (int i = 1; i < arr.length; i++) {
             nPrec = i - 1;
-            nCurrent = arr[i];
-            while (nPrec >= 0 && nCurrent < arr[nPrec]) {
+            nCurrent = i;
+            while (nPrec >= 0 && arr[nCurrent] < arr[nPrec]) {
                 arr[nPrec + 1] = arr[nPrec];
                 nPrec--;
             }
-            arr[nPrec + 1] = nCurrent;
+            arr[nPrec + 1] = arr[nCurrent];
         }
     }
 
     public static void selectionSort(int[] arr) { // se min>j j == new min e dopo scambio funziona
         int min;
         for (int i = 0; i < arr.length; i++) {
-            min = i;
-            for (int j = i; j < arr.length; j++) {
+            min = i;   
+            for (int j = i+1; j < arr.length; j++) {
                 if (arr[j] < arr[min]) {
                     min = j;
                 }
