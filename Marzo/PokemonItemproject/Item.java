@@ -1,5 +1,5 @@
 
-public abstract class Item {
+public abstract class Item extends HeldItem implements Medicine {
 
     protected final String NOME;
     protected final String DESCRIZIONE;
@@ -15,7 +15,29 @@ public abstract class Item {
     public String toString() {
         return "Item [NOME=" + NOME +", quantità=" + quantità + "]";
     }
-    
+    @Override
+    public boolean equipaggiabile() {
+        if (this.equipaggiabile) {
+            System.out.println("c'è già qualcosa equipaggiato");
+            return true;
+        } else {
+            System.out.println("si può equipaggiare");
+            return false;
+        }
+    }
+
+    @Override
+    public void equipaggia(Item equipaggia) {
+        this.item = equipaggia;
+        this.equipaggiabile = true;
+    }
+
+    @Override
+    public void disequipaggia() {
+        this.item = null;
+        this.equipaggiabile = false;
+    }
+
 
 
 }

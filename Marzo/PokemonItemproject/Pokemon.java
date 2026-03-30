@@ -1,5 +1,5 @@
 
-public class Pokemon extends HeldItem {
+public class Pokemon  {
 
     private int hp;
     private int atk;
@@ -13,27 +13,5 @@ public class Pokemon extends HeldItem {
         this.STATUS = status;
     }
 
-    @Override
-    public boolean equipaggiabile() {
-        if (this.equipaggiabile) {
-            System.out.println("c'è già qualcosa equipaggiato");
-            return true;
-        } else {
-            System.out.println("si può equipaggiare");
-            return false;
-        }
-    }
-
-    @Override
-    public void equipaggia(Item equipaggia) {
-        this.item = equipaggia;
-        this.equipaggiabile = true;
-    }
-
-    @Override
-    public void disequipaggia() {
-        this.item = null;
-        this.equipaggiabile = false;
-    }
-
+ 
 }
