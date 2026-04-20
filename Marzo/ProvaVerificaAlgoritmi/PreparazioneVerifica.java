@@ -26,7 +26,10 @@ public class PreparazioneVerifica {
         return lancio;
     }
 
-    public static void bubbleSort(int[] arr) { // funziona ma era meglio fare con n+1    n<n-1
+    public static void bubbleSort(int[] arr, int da, int a) { // funziona ma era meglio fare con n+1    n<n-1
+        if(arr == null) throw new IllegalArgumentException("Array nullo");
+        if(da < 0 || a > arr.length - 1 || da > a) throw new IndiciNonValidiException("Indici non validi");
+
         int nCurrent;
         int nPrec;
         for (int i = 0; i < arr.length; i++) {
@@ -108,7 +111,7 @@ public class PreparazioneVerifica {
     public static void main(String[] args) {
         int[] arr = {9, 6, 3, 4, 5, 2, 7, 10, 1, 8};
         // System.out.println(binarySearch(array, 5));
-        // bubbleSort(array);
+        bubbleSort(arr, 0, 0);
         // array = mergeSort(array);
         //insertionSort(arr);
         // selectionSort(array);
