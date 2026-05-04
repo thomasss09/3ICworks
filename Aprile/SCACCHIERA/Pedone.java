@@ -15,19 +15,15 @@ public class Pedone extends Movements {
                 }
                 break;
             case 'a':
-                if (posizione[0] + caselle > 0 && this.posizione[0] < scacchi.rig) {
-                    posizione[0] += caselle;
-                }
-                break;
+                throw new MoviementoNonValidoException("movimento non valido ");
             case 's':
-                if (posizione[0] + caselle > 0 && this.posizione[0] < scacchi.rig) {
-                    posizione[0] += caselle;
-                }
-                break;
+                throw new MoviementoNonValidoException("movimento non valido ");
+            case 'r'://diagonalley DA FARE
+                    if (posizione[0] + caselle > 0 && this.posizione[0] < scacchi.rig) {
+                        posizione[0] += caselle;
+                    }    
             case 'd':
-                if (posizione[0] + caselle > 0 && this.posizione[0] < scacchi.rig) {
-                    posizione[0] += caselle;
-                }
+                throw new MoviementoNonValidoException("movimento non valido ");
             default:
                 break;
         }
