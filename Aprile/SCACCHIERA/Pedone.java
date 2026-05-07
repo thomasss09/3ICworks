@@ -32,5 +32,7 @@ public class Pedone extends Movements {
                 break;
         }
     }
+    public abstract int ciaoMondo();
+    
 
 }
