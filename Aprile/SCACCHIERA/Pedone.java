@@ -28,5 +28,6 @@ public class Pedone extends Movements {
                 break;
         }
     }
+    
 
 }
