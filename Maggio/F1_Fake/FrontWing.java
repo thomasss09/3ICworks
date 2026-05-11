@@ -1,5 +1,4 @@
-package Maggio.F1_Fake;
 
 public class FrontWing {
-
+    private double dragCoefficent;
 }
